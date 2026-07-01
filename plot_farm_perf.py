@@ -2,11 +2,27 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
 
+# 1. Загружаем секреты из .env
+load_dotenv()
+
+# 2. Теперь определяем переменную db_url, используя данные из .env
+db_user = os.getenv("DB_USER")
+db_password = os.getenv("DB_PASSWORD")
+db_host = os.getenv("DB_HOST", "localhost")
+db_port = os.getenv("DB_PORT", "5432")
+db_name = os.getenv("DB_NAME")
+
+db_url = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+
+# 3. Дальше идет ваш основной код, который использует db_url
+# ... например: engine = create_engine(db_url)
 print("--- Fetching Data from PostgreSQL for Visualisation --- \n")
 
 # 1. Connect to your PostgreSQL database
-db_url = "postgresql://postgres:********@localhost:5432/yorkshire_farm"
+#db_url = "postgresql://postgres:********@localhost:5432/yorkshire_farm"
 engine = create_engine(db_url)
 
 # 2. SQL Query to get weight dynamics over 20 weeks
